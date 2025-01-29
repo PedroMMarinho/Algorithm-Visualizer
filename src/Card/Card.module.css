@@ -1,0 +1,43 @@
+
+.cardLink{
+    text-decoration: none;
+    color: #333;
+}
+
+.cardLink:hover{
+    .card{
+        transform: translateY(-10px);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.card{
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    display: inline-block;
+    height: 360px;
+    max-width: 360px;
+    margin: 20px;
+    vertical-align: top;
+}
+
+.card img{
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+    width: 360px;
+    height: 200px;
+}
+
+.card h2{
+    font-size: 1.5rem;
+    margin: 10px;
+    color: black;
+}
+
+.card p{
+    font-size: 1rem;
+    margin: 10px;
+
+}

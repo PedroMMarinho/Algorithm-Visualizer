@@ -1,0 +1,48 @@
+
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    padding: 0 40px;
+}
+
+.navbarUl{
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.navbarLi{
+    display: flex;
+    align-items: center;
+    border-left: 2px solid black;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 100%;
+    font-size: x-large;
+}
+
+.navbarUl a{
+    text-decoration: none;
+    color: black;
+}
+
+.navbarUl a:hover{
+    color: white;
+    background-color: rgba(0, 0, 0, 0.841);
+}
+
+.logo{
+    font-weight: 600;
+    font-size: xx-large;
+    color: black;
+    text-decoration: none;
+}
+
+.aboutMe{
+    font-size: x-large;
+    justify-self: end;
+}
