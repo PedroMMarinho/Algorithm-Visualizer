@@ -1,0 +1,40 @@
+.container{
+    background-color: #393939;
+    border-bottom: #838383 2px solid;
+    border-top: #838383 2px solid;
+    display: flex;
+    justify-content: end;
+    padding: 0 60px;
+    height: 5vh;
+    align-items: center;
+}
+
+.element{
+    display: flex;
+    padding: 0 15px;
+    height: 100%;
+}
+.compile{
+    color: #dbdbdb;
+    background:none;
+    border:none;
+}
+
+.compile:hover{
+    background-color: #2a2929;
+}
+
+.run{
+    color: #dbdbdb;
+    background:none;
+    border:none;
+}
+
+.element:hover{
+    background-color: #2a2929;
+}
+
+.icon{
+    padding-right: 5px;
+    color: #dbdbdb;
+}

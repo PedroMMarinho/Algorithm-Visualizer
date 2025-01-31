@@ -1,0 +1,18 @@
+.editorContainer {
+    display: flex;
+    justify-content: end;
+}
+  
+.codeEditorWrapper{
+    width: 500px;
+    border-bottom: #838383 2px solid;
+}
+
+.editorContent{
+    border-left: #838383 2px solid;
+}
+
+.deleteFile{
+    background-color: #393939;
+    height: auto;
+}

@@ -88,3 +88,6 @@ C:\Users\pmigu\Faculdade\PersonalCoding\AlgorithmVisualizer\backend\obj\Debug\ne
 C:\Users\pmigu\Faculdade\PersonalCoding\AlgorithmVisualizer\backend\obj\Debug\net9.0\backend.pdb
 C:\Users\pmigu\Faculdade\PersonalCoding\AlgorithmVisualizer\backend\obj\Debug\net9.0\backend.genruntimeconfig.cache
 C:\Users\pmigu\Faculdade\PersonalCoding\AlgorithmVisualizer\backend\obj\Debug\net9.0\ref\backend.dll
+C:\Users\pmigu\Faculdade\PersonalCoding\AlgorithmVisualizer\backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\pmigu\Faculdade\PersonalCoding\AlgorithmVisualizer\backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\pmigu\Faculdade\PersonalCoding\AlgorithmVisualizer\backend\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
