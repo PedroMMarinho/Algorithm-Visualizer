@@ -11,23 +11,28 @@
 
 .element{
     display: flex;
-    padding: 0 15px;
     height: 100%;
 }
 .compile{
     color: #dbdbdb;
     background:none;
     border:none;
+    padding: 0 15px;
 }
 
 .compile:hover{
-    background-color: #2a2929;
+    cursor: pointer;
+}
+
+.run:hover{
+    cursor: pointer;
 }
 
 .run{
     color: #dbdbdb;
     background:none;
     border:none;
+    padding: 0 15px;
 }
 
 .element:hover{
@@ -38,3 +43,35 @@
     padding-right: 5px;
     color: #dbdbdb;
 }
+
+
+
+.sliderContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 15px;
+  }
+  
+  .sliderLabel {
+    font-size: 0.9rem;
+    white-space: nowrap;
+    color: #dbdbdb;
+  }
+  
+  .slider {
+    -webkit-appearance: none;
+    width: 100px;
+    height: 4px;
+    background: #838383;
+    border-radius: 2px;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 5px;
+    height: 14px;
+    border-radius: 25%;
+    background: #dbdbdb;
+    cursor: pointer;
+  }
