@@ -49,14 +49,14 @@
 .sliderContainer {
     display: flex;
     align-items: center;
-    gap: 8px;
     padding: 0 15px;
-  }
+}
   
   .sliderLabel {
     font-size: 0.9rem;
     white-space: nowrap;
     color: #dbdbdb;
+    padding-right: 8px;
   }
   
   .slider {
