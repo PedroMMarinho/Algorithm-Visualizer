@@ -3,11 +3,13 @@ import AlgorithmRunner from '../AlgorithmRunner/AlgorithmRunner';
 import CodeSettings from '../CodeSettings/CodeSettings';
 
 function About() {
-
+  const style = {
+    height: "89vh",
+  };
   return (
     <>
+      <div style={style}>
       <CodeSettings/>
-      <div>
         <AlgorithmRunner/>
       </div>
     </>

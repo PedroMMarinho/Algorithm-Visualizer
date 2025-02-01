@@ -3,8 +3,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
+    height: 11vh;
     padding: 0 40px;
+    background-color: #f1a90cfe;
 }
 
 .navbarUl{

@@ -5,14 +5,40 @@
   
 .codeEditorWrapper{
     width: 500px;
+    height: 74vh;
     border-bottom: #838383 2px solid;
 }
 
 .editorContent{
     border-left: #838383 2px solid;
+    background-color: #393939;
 }
 
 .deleteFile{
+    padding: 0 20px;
     background-color: #393939;
-    height: auto;
+    height: 6vh;
+    display: flex;
+    justify-content: end;
+    border-bottom: #838383 2px solid;
+}
+
+.fileSelector{
+    padding: 0 10px;
+    background-color: #393939;
+    height: 4vh;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.fileButton{
+    padding: 0 10px;
+    border: none;
+    background: none;
+    color: #dbdbdb;
+}
+
+.fileButton:hover{
+    cursor: pointer;
 }
