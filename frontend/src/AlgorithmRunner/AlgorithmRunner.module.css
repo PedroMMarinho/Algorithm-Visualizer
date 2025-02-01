@@ -5,7 +5,7 @@
   
 .codeEditorWrapper{
     width: 500px;
-    height: 74vh;
+    height: 73vh;
     border-bottom: #838383 2px solid;
 }
 
@@ -23,14 +23,41 @@
     border-bottom: #838383 2px solid;
 }
 
+
+.deleteFile button{
+    background: none;
+    color: #dbdbdb;
+    border: none;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+
+.deleteFile button:disabled{
+    color: #838383;
+    cursor: not-allowed;
+}
+
+.deleteFile button:hover{
+    background-color: #1e1e1e;
+}
+
 .fileSelector{
-    padding: 0 10px;
     background-color: #393939;
-    height: 4vh;
+    height: 5vh;
     text-align: center;
     display: flex;
     flex-direction: row;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    max-width: 500px;
 }
+
+.fileSelector::-webkit-scrollbar {
+    height: 6px; 
+}
+
 
 .fileButton{
     padding: 0 10px;
@@ -41,4 +68,43 @@
 
 .fileButton:hover{
     cursor: pointer;
+}
+
+.activeFile {
+    background-color: #1e1e1e; 
+    border-right: #838383 2px solid;
+    border-left: #838383 2px solid;
+}
+
+.fileSelectorLeft{
+    border-bottom: #838383 2px solid;
+    height: auto;
+    min-width: 25px;
+}
+
+.innactiveFile{
+    border-bottom: #838383 2px solid;   
+}
+
+.fileSelectorRight{
+    border-bottom: #838383 2px solid;
+    height: auto;
+    width: 100%;
+    padding-right: 20px;
+}
+
+.AddFile{
+    color: #dbdbdb;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-bottom: #838383 2px solid;
+    padding-left: 8px;
+}
+
+.noCurrentFiles{
+    color: #dbdbdb;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
 }

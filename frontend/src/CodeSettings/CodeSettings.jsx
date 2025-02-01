@@ -14,7 +14,7 @@ function CodeSettings() {
   return (
     <div className={style.container}>
       <div className={style.element}>
-        <button className={style.compile}>
+        <button className={style.compile} onClick={() => console.log("Compile")}>
           <FontAwesomeIcon icon={faWrench} className={style.icon} />
           Compile
         </button>
