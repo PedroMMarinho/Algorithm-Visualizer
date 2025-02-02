@@ -4,7 +4,8 @@ import style from "./AlgorithmRunner.module.css";
 import themeConfig from "/src/config/monaco-theme.json";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus,faTrash  } from '@fortawesome/free-solid-svg-icons';
-
+import AlgorithmSelector from '../AlgorithmSelector/AlgorithmSelector';
+import CodeSettings from "../CodeSettings/CodeSettings";
 
 // Get files from database looking like this:
 const initialFiles  = {
@@ -84,7 +85,12 @@ const AlgorithmRunner = () => {
 
 
   return (
+    <>
+    <CodeSettings/>
+
     <div className={style.editorContainer}>
+      <AlgorithmSelector/>
+
       <div className={style.editorContent}>
         <div className={style.fileSelector}>
           <div className={style.fileSelectorLeft}></div>
@@ -134,7 +140,9 @@ const AlgorithmRunner = () => {
 
       </div>
     </div>
+    </>
   );
+  
 };
 
 export default AlgorithmRunner;
