@@ -9,12 +9,20 @@ function AlgorithmSelector() {
   const [isOpen, setIsOpen] = useState(true);
   const algorithms = ['Bubble Sort', 'Quick Sort', 'Merge Sort', 'Insertion Sort', 'Selection Sort', 'Heap Sort', 'Radix Sort', 'Counting Sort', 'Bucket Sort', 'Shell Sort', 'Cocktail Sort', 'Comb Sort', 'Pigeonhole Sort', 'Cycle Sort', 'Bitonic Sort', 'Pancake Sort', 'Binary Insertion Sort', 'Bogo Sort', 'Gnome Sort', 'Odd-Even Sort', 'Stooge Sort', 'Strand Sort', 'Bozo Sort', 'Slow Sort', 'Sleep Sort', 'Bead Sort', 'Pancake'];
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('');
-
+  const location = useLocation();
   const handleSelect = (algorithm) => {
     setSelectedAlgorithm(algorithm);
   };
 
   const buttonActive = isOpen ? style.buttonActive : '';
+  const formattedPath = location.pathname
+  .replace(/\//g, ' ') 
+  .trim() 
+  .split(' ') 
+  .map(word => word.charAt(0).toUpperCase() + word.slice(1)) 
+  .join(' '); 
+
+
 
   return (
     <div className={style.outerContainer}>
@@ -24,7 +32,7 @@ function AlgorithmSelector() {
         className={style.dropdownButton + ' ' + buttonActive}
         onClick={() => setIsOpen(!isOpen) }
       >
-        Sorting Algorithms
+        {formattedPath + " Algorithms"} 
         <FontAwesomeIcon 
             icon={isOpen ? faChevronDown : faChevronRight} 
             className={style.icon}
@@ -36,7 +44,7 @@ function AlgorithmSelector() {
           {algorithms.map((algorithm) => {
 
             const algorithmSlug = algorithm.toLowerCase().replace(/\s+/g, '-'); // Convert to URL-friendly format
-            const path = `${useLocation().pathname}/${algorithmSlug}`;
+            const path = `${location.pathname}/${algorithmSlug}`;
 
             return (
             <Link to={path} style={{ textDecoration: 'none' }} key={algorithm}>

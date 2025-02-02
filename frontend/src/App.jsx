@@ -3,41 +3,35 @@ import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Layout from "./Layout";
 import Algorithm from "./Pages/Algorithm";
+import NotFound from "./Pages/NotFound";
 
 const algorithmCategories = [
-  'graph',
-  'sorting',
-  'searching',
-  'backtracking',
-  'divide-conquer',
-  'greedy',
-  'dynamic-programming'
+  "graph",
+  "sorting",
+  "searching",
+  "backtracking",
+  "divide-conquer",
+  "greedy",
+  "dynamic-programming",
 ];
 
 function App() {
-    return(
-      <Router>
+  return (
+    <Router>
       <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          
+          
+          <Route path="/:category" element={<Algorithm categories={algorithmCategories} />} />
 
-        <Route element={<Layout/>}>
-          <Route path="/" element={<Home/>}/>
-          <Route path="/about" element={<About/>} />
-          <Route 
-            path="/:category" 
-            element={<Algorithm />} 
-            loader={({ params }) => {
-              if (!algorithmCategories.includes(params.category)) {
-                throw new Response("Not Found", { status: 404 });
-              }
-              return null;
-            }}
-          />
-
+         
+          <Route path="*" element={<NotFound />} />
         </Route>
-
       </Routes>
-      </Router>
-    );
+    </Router>
+  );
 }
 
-export default App
+export default App;
