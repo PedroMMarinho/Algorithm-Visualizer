@@ -120,3 +120,20 @@
     border-top: #838383 2px solid;
     color: #dbdbdb;
 }
+
+
+.previewContainer {
+    flex: 1;
+    background-color: #1e1e1e;
+    overflow-y: auto;
+    border-bottom: #838383 2px solid;
+    max-height: 84vh;
+}
+
+.markdownPreview {
+    padding: 20px;
+    background: transparent !important;
+}
+
+
+ 
