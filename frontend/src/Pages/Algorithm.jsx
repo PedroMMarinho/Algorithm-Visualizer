@@ -29,7 +29,7 @@ function Algorithm({ categories, algorithmsData }) {
     <>
       <Header />
       <div style={style}>
-        <AlgorithmRunner algorithmCategory={category} />
+        <AlgorithmRunner algorithmCategory={category} currentAlgorithm={algorithm}/>
       </div>
     </>
   );

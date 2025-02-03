@@ -108,3 +108,15 @@
     justify-content: center;
     padding: 10px 0;
 }
+
+.unselectedAlgorithmContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 200px;
+    background-color: #393939;
+    width: 100%;
+    border-bottom: #838383 2px solid;
+    border-top: #838383 2px solid;
+    color: #dbdbdb;
+}

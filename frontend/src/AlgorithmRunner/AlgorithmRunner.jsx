@@ -22,15 +22,67 @@ const initialFiles  = {
   },
 };
 
-const AlgorithmRunner = ({algorithmCategory}) => {
+const API_URL = import.meta.env.VITE_API_URL;
+
+const AlgorithmRunner = ({algorithmCategory, currentAlgorithm}) => {
 
   const editorRef = useRef(null);
 
-  const [files, setFiles] = useState(initialFiles);
-  const [fileName, setFileName] = useState("algorithm.cs");
+  const [files, setFiles] = useState({});
+  const [fileName, setFileName] = useState("");
 
   const file = files[fileName];
   
+  useEffect(() => {
+    // Only fetch files if an algorithm is selected
+    if (!currentAlgorithm) {
+      return;
+    }
+
+    const fetchFiles = async () => {
+      try {
+        const url = `${API_URL}api/files/${algorithmCategory}/${currentAlgorithm}`;
+  
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.message || 'Failed to fetch files');
+        }
+  
+        const data = await response.json();
+  
+        // Handle different response structures
+        let files = {};
+        if (currentAlgorithm) {
+          // Direct files structure
+          files = data;
+        } else {
+          // Nested algorithms structure
+          files = Object.values(data).reduce((acc, curr) => 
+            ({ ...acc, ...curr.files }), {});
+        }
+  
+        if (Object.keys(files).length === 0) {
+          throw new Error('No files found');
+        }
+  
+        setFiles(files);
+        setFileName(Object.keys(files)[0]);
+  
+      } catch (error) {
+        console.error("Error fetching files:", error);
+        setFiles(initialFiles);
+        setFileName("algorithm.cs");
+        // Consider adding error state feedback
+      }
+    };
+  
+    fetchFiles();
+  }, [algorithmCategory, currentAlgorithm]);
+  
+
+
 
   // Handle editor mount
   const handleEditorMount = (editor, monaco) => {
@@ -83,13 +135,26 @@ const AlgorithmRunner = ({algorithmCategory}) => {
     }));
   };
 
+  if(!currentAlgorithm) {
+    return (<>
+    
+    <div className={style.editorContainer} style= {{height: '100%' , justifyContent: 'start'}}>
+      <AlgorithmSelector category={algorithmCategory} />
+      <div className={style.unselectedAlgorithmContainer}>
+        <h1>Select an algorithm from the dropdown menu</h1>
+      </div>
+    </div>
+    </>
+  );
+  }
 
   return (
     <>
+    
     <CodeSettings/>
 
     <div className={style.editorContainer}>
-      <AlgorithmSelector category={algorithmCategory}/>
+      <AlgorithmSelector category={algorithmCategory} selectedAlgorithm={currentAlgorithm}/>
 
       <div className={style.editorContent}>
         <div className={style.fileSelector}>

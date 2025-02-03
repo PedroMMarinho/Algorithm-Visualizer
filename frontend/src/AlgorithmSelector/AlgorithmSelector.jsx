@@ -2,21 +2,18 @@ import { useState } from 'react';
 import style from './AlgorithmSelector.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { Link,  } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 
-function AlgorithmSelector({category}) {
+function AlgorithmSelector({category, selectedAlgorithm}) {
 
   const [isOpen, setIsOpen] = useState(true);
   const algorithms = ['Bubble Sort', 'Quick Sort', 'Merge Sort', 'Insertion Sort', 'Selection Sort', 'Heap Sort', 'Radix Sort', 'Counting Sort', 'Bucket Sort', 'Shell Sort', 'Cocktail Sort', 'Comb Sort', 'Pigeonhole Sort', 'Cycle Sort', 'Bitonic Sort', 'Pancake Sort', 'Binary Insertion Sort', 'Bogo Sort', 'Gnome Sort', 'Odd-Even Sort', 'Stooge Sort', 'Strand Sort', 'Bozo Sort', 'Slow Sort', 'Sleep Sort', 'Bead Sort', 'Pancake'];
-  const [selectedAlgorithm, setSelectedAlgorithm] = useState('');
-
-  const handleSelect = (algorithm) => {
-    setSelectedAlgorithm(algorithm);
-  };
-
   const buttonActive = isOpen ? style.buttonActive : '';
 
   const formatedCategory = category.charAt(0).toUpperCase() + category.slice(1);
+  
+  const selectedAlgo = selectedAlgorithm ? selectedAlgorithm : '';
+  
 
   return (
     <div className={style.outerContainer}>
@@ -43,8 +40,8 @@ function AlgorithmSelector({category}) {
             return (
             <Link to={path} style={{ textDecoration: 'none' }} key={algorithm}>
             <div
-              className={style.option + (selectedAlgorithm === algorithm ? ' ' + style.selectedAlgorithm : '')}
-              onClick={() => handleSelect(algorithm)}
+              className={style.option + (selectedAlgo === algorithmSlug ? ' ' + style.selectedAlgorithm : '')}
+              
             >
               {algorithm}
             </div>
