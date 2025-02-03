@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus,faTrash  } from '@fortawesome/free-solid-svg-icons';
 import AlgorithmSelector from '../AlgorithmSelector/AlgorithmSelector';
 import CodeSettings from "../CodeSettings/CodeSettings";
+import { useParams } from "react-router-dom";
 
 // Get files from database looking like this:
 const initialFiles  = {
@@ -21,16 +22,15 @@ const initialFiles  = {
   },
 };
 
-const AlgorithmRunner = () => {
+const AlgorithmRunner = ({algorithmCategory}) => {
 
   const editorRef = useRef(null);
-
 
   const [files, setFiles] = useState(initialFiles);
   const [fileName, setFileName] = useState("algorithm.cs");
 
   const file = files[fileName];
-
+  
 
   // Handle editor mount
   const handleEditorMount = (editor, monaco) => {
@@ -89,7 +89,7 @@ const AlgorithmRunner = () => {
     <CodeSettings/>
 
     <div className={style.editorContainer}>
-      <AlgorithmSelector/>
+      <AlgorithmSelector category={algorithmCategory}/>
 
       <div className={style.editorContent}>
         <div className={style.fileSelector}>
