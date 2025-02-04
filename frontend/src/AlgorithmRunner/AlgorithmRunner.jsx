@@ -40,7 +40,16 @@ const AlgorithmRunner = ({ algorithmCategory, currentAlgorithm }) => {
   const file = files[fileName];
 
   const [compilationResult, setCompilationResult] = useState(null);
-  const [runOutput, setRunOutput] = useState(null);
+  const [runOutput, setRunOutput] = useState({ rawOutput: "", steps: [] });
+
+
+  const [visualizationSteps, setVisualizationSteps] = useState([]);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [executionSpeed, setExecutionSpeed] = useState(1); // 1x speed by default
+
+  // Convert speed multiplier to delay (1x = 1000ms, 2x = 500ms, 0.5x = 2000ms, etc.)
+  const delay = 1000 / executionSpeed;
 
 
   const handleCompile = async () => {
@@ -69,22 +78,58 @@ const AlgorithmRunner = ({ algorithmCategory, currentAlgorithm }) => {
     }
   };
 
+
+  useEffect(() => {
+    let interval;
+    if (isPlaying && currentStep < visualizationSteps.length - 1) {
+      interval = setInterval(() => {
+        setCurrentStep(prev => {
+          if (prev >= visualizationSteps.length - 1) {
+            setIsPlaying(false);
+            return prev;
+          }
+          return prev + 1;
+        });
+      }, delay);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, currentStep, delay, visualizationSteps.length]);
+
   const handleRun = async () => {
-    if (!file || file.language != "csharp") return;
-    
+    if (!file || file.language !== "csharp") return;
+  
     try {
       const response = await fetch(`${API_URL}api/files/run`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code: file.code })
       });
-      
+  
       const result = await response.json();
-      setRunOutput(result.success ? result.output : result.errors.join('\n'));
+      
+      if (result.success) {
+        setVisualizationSteps(result.steps || []);
+        setCurrentStep(0);
+        console.log(result.steps);
+        console.log(result.output);
+        setRunOutput({
+            rawOutput: result.output,
+            steps: result.steps
+        });
+        
+        // Auto-play if there are visualization steps
+        if (result.steps?.length > 0) {
+          setIsPlaying(true);
+        }
 
+      } else {
+        setRunOutput(result.errors.join('\n'));
+        setVisualizationSteps([]);
+      }
     } catch (error) {
       console.error('Execution failed:', error);
       setRunOutput('Execution failed: ' + error.message);
+      setVisualizationSteps([]);
     }
   };
 
@@ -202,10 +247,18 @@ const AlgorithmRunner = ({ algorithmCategory, currentAlgorithm }) => {
 
   return (
     <>
-      <CodeSettings onCompile={handleCompile}
+      <CodeSettings 
+        onCompile={handleCompile}
         onRun={handleRun}
         compilationResult={compilationResult}
-        runOutput={runOutput}
+        runOutput={runOutput.rawOutput}
+        isPlaying={isPlaying}
+        onPlayPause={setIsPlaying}
+        currentStep={currentStep}
+        totalSteps={visualizationSteps.length}
+        onStepChange={setCurrentStep}
+        executionSpeed={executionSpeed}
+        onSpeedChange={setExecutionSpeed}
         />
 
       <div className={style.editorContainer}>
@@ -226,8 +279,14 @@ const AlgorithmRunner = ({ algorithmCategory, currentAlgorithm }) => {
 
           {!(file?.language === "plaintext" || file?.language === "markdown") ? (
             <>
-              <VisualizerContainer/>
-              <ConsoleContainer compilation={compilationResult} runOutput={runOutput}/>
+              <VisualizerContainer 
+              currentState={visualizationSteps[currentStep]?.array || []}
+              highlightedIndices={visualizationSteps[currentStep]?.highlight || []}
+              />
+              <ConsoleContainer 
+              logs={visualizationSteps[currentStep]?.logs || []}
+              compilation={compilationResult}
+              runOutput={runOutput.rawOutput}/>
             </>
             ): null}
 

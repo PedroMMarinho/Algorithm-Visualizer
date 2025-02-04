@@ -6,6 +6,8 @@ using System.Collections.Immutable;
 using System.Reflection;
 using System.Runtime.Loader;
 using Microsoft.Extensions.DependencyModel;
+using System.Text.Json;
+using System.Text;
 
 namespace AlgorithmAPI.Controllers
 {
@@ -99,11 +101,12 @@ public IActionResult RunCode([FromBody] RunRequest request)
 
     try
     {
-        var output = ExecuteCompiledCode(compileResult.Compilation);
+        var (output, steps) = ExecuteCompiledCode(compileResult.Compilation);
         return Ok(new
         {
             success = true,
-            output
+            output,
+            steps
         });
     }
     catch (Exception ex)
@@ -160,44 +163,93 @@ private static (bool Success, ImmutableArray<Diagnostic> Diagnostics, CSharpComp
     
     return (emitResult.Success, emitResult.Diagnostics, compilation);
 }
-private static string ExecuteCompiledCode(CSharpCompilation compilation)
+private static (string Output, List<StepData> Steps) ExecuteCompiledCode(CSharpCompilation compilation)
 {
     using var ms = new MemoryStream();
     if (!compilation.Emit(ms).Success)
         throw new InvalidOperationException("Compilation failed");
 
-    // Create a temporary assembly load context
     var alc = new AssemblyLoadContext("TempContext", isCollectible: true);
+    var originalOut = Console.Out;
     
-    TextWriter originalOut = Console.Out; // Move this outside the try block
-
     try
     {
         ms.Seek(0, SeekOrigin.Begin);
         var assembly = alc.LoadFromStream(ms);
-        
         var entryPoint = assembly.EntryPoint 
             ?? throw new InvalidOperationException("No entry point found");
 
-        // Capture console output
         using var sw = new StringWriter();
         Console.SetOut(sw);
-        
-        // Create execution parameters
-        object[]? args = entryPoint.GetParameters().Length > 0 
-            ? new object[] { Array.Empty<string>() } 
-            : null;
 
-        entryPoint.Invoke(null, args);
-        return sw.ToString();
+        var outputCapture = new StringWriter();
+        var steps = new List<StepData>();
+        var stepBuffer = new List<string>();
+
+        // Create custom TextWriter to intercept output
+        var interceptor = new InterceptingWriter(outputCapture, line =>
+        {
+            if (line.StartsWith("[STEP]"))
+            {
+                try
+                {
+                    var json = line.Substring(6);
+                    var step = JsonSerializer.Deserialize<StepData>(json);
+                    step.Logs = stepBuffer.ToArray();
+                    steps.Add(step);
+                    stepBuffer.Clear();
+                }
+                catch { /* Handle invalid step format */ }
+            }
+            else
+            {
+                stepBuffer.Add(line);
+            }
+        });
+
+        Console.SetOut(interceptor);
+        
+        entryPoint.Invoke(null, entryPoint.GetParameters().Length > 0 
+            ? new object[] { Array.Empty<string>() } 
+            : null);
+
+        // Add remaining logs
+        if (stepBuffer.Count > 0)
+        {
+            steps.Add(new StepData {
+                Logs = stepBuffer.ToArray(),
+                DataArray = Array.Empty<int>()
+            });
+        }
+
+        return (outputCapture.ToString(), steps);
     }
     finally
     {
-        Console.SetOut(originalOut); // Now originalOut is always accessible
-        alc.Unload(); // Unload the temporary context
+        Console.SetOut(originalOut);
+        alc.Unload();
     }
 }
 
+private class InterceptingWriter : TextWriter
+{
+    private readonly TextWriter _original;
+    private readonly Action<string> _interceptor;
+
+    public InterceptingWriter(TextWriter original, Action<string> interceptor)
+    {
+        _original = original;
+        _interceptor = interceptor;
+    }
+
+    public override Encoding Encoding => _original.Encoding;
+
+    public override void WriteLine(string? value)
+    {
+        if (value != null) _interceptor(value);
+        _original.WriteLine(value);
+    }
+}
 
 public class CompileRequest
 {

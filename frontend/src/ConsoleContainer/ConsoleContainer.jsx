@@ -1,7 +1,7 @@
 import style from "./ConsoleContainer.module.css";
 
 
-function ConsoleContainer({ compilation ,runOutput }) {
+function ConsoleContainer({ compilation ,runOutput,logs }) {
 
     
   return (
