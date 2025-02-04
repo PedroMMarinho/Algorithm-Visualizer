@@ -58,6 +58,10 @@
               "target": "Package",
               "version": "[4.12.0, )"
             },
+            "Microsoft.Extensions.DependencyModel": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[7.2.0, )"

@@ -6,10 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import AlgorithmSelector from "../AlgorithmSelector/AlgorithmSelector";
 import CodeSettings from "../CodeSettings/CodeSettings";
-import { useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { marked } from "marked";
 import "github-markdown-css/github-markdown.css";
+import VisualizerContainer from "../VisualizerContainer/VisualizerContainer";
+import ConsoleContainer from "../ConsoleContainer/ConsoleContainer";
 
 // Get files from database looking like this:
 const initialFiles = {
@@ -36,6 +37,57 @@ const AlgorithmRunner = ({ algorithmCategory, currentAlgorithm }) => {
   const [fileName, setFileName] = useState("");
 
   const file = files[fileName];
+
+  const [compilationResult, setCompilationResult] = useState(null);
+  const [runOutput, setRunOutput] = useState(null);
+
+
+  const handleCompile = async () => {
+    if (!file || file.language != "csharp") return;
+    
+    try {
+      const response = await fetch(`${API_URL}api/files/compile`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: file.code })
+      });
+      
+      const result = await response.json();
+      
+      setCompilationResult(result.success ? 'Compilation successful' : 'Compilation failed');
+      
+      // Update file compilation status
+      setFiles(prev => ({
+        ...prev,
+        [fileName]: {
+          ...prev[fileName],
+          compilation: result
+        }
+      }));
+    } catch (error) {
+      console.error('Compilation failed:', error);
+    }
+  };
+
+  const handleRun = async () => {
+    if (!file || file.language != "csharp") return;
+    
+    try {
+      const response = await fetch(`${API_URL}api/files/run`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: file.code })
+      });
+      
+      const result = await response.json();
+      console.log(result);
+      setRunOutput(result.success ? result.output : result.errors.join('\n'));
+
+    } catch (error) {
+      console.error('Execution failed:', error);
+      setRunOutput('Execution failed: ' + error.message);
+    }
+  };
 
   useEffect(() => {
     // Only fetch files if an algorithm is selected
@@ -151,7 +203,11 @@ const AlgorithmRunner = ({ algorithmCategory, currentAlgorithm }) => {
 
   return (
     <>
-      <CodeSettings />
+      <CodeSettings onCompile={handleCompile}
+        onRun={handleRun}
+        compilationResult={compilationResult}
+        runOutput={runOutput}
+        />
 
       <div className={style.editorContainer}>
         <AlgorithmSelector
@@ -160,7 +216,7 @@ const AlgorithmRunner = ({ algorithmCategory, currentAlgorithm }) => {
         />
 
         <div className={style.previewContainer}>
-          {file?.language === "markdown" ? (
+          {file?.language === "markdown" || file?.language === "plaintext" ? (
             <div
             className={`markdown-body ${style.markdownPreview}`}
               dangerouslySetInnerHTML={{
@@ -168,6 +224,14 @@ const AlgorithmRunner = ({ algorithmCategory, currentAlgorithm }) => {
               }}
             />
           ) : null}
+
+          {!(file?.language === "plaintext" || file?.language === "markdown") ? (
+            <>
+              <VisualizerContainer/>
+              <ConsoleContainer compilation={compilationResult} runOutput={runOutput}/>
+            </>
+            ): null}
+
         </div>
 
         <div className={style.editorContent}>

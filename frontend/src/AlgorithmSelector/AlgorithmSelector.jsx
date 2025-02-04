@@ -4,10 +4,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { Link  } from 'react-router-dom';
 
+const algorithmsData = {
+  "graph": ["Dijkstra", "Bellman Ford", "Floyd Warshall"],
+  sorting: ['Bubble Sort', 'Quick Sort', 'Merge Sort', 'Insertion Sort', 'Selection Sort', 'Heap Sort', 'Radix Sort', 'Counting Sort', 'Bucket Sort', 'Shell Sort', 'Cocktail Sort', 'Comb Sort', 'Pigeonhole Sort', 'Cycle Sort', 'Bitonic Sort', 'Pancake Sort', 'Binary Insertion Sort', 'Bogo Sort'],
+  searching: ["Linear Search", "Binary Search"],
+  backtracking: ["N Queens", "Sudoku Solver"],
+  "divide-conquer": ["Merge Sort", "Quick Sort"],
+  greedy: ["Fractional Knapsack", "Prim's Algorithm"],
+  "dynamic-programming": ["0-1 Knapsack", "Longest Common Subsequence"],
+};
+
+
 function AlgorithmSelector({category, selectedAlgorithm}) {
 
   const [isOpen, setIsOpen] = useState(true);
-  const algorithms = ['Bubble Sort', 'Quick Sort', 'Merge Sort', 'Insertion Sort', 'Selection Sort', 'Heap Sort', 'Radix Sort', 'Counting Sort', 'Bucket Sort', 'Shell Sort', 'Cocktail Sort', 'Comb Sort', 'Pigeonhole Sort', 'Cycle Sort', 'Bitonic Sort', 'Pancake Sort', 'Binary Insertion Sort', 'Bogo Sort', 'Gnome Sort', 'Odd-Even Sort', 'Stooge Sort', 'Strand Sort', 'Bozo Sort', 'Slow Sort', 'Sleep Sort', 'Bead Sort', 'Pancake'];
+  const algorithms = algorithmsData[category];
   const buttonActive = isOpen ? style.buttonActive : '';
 
   const formatedCategory = category.charAt(0).toUpperCase() + category.slice(1);

@@ -7,23 +7,25 @@ import {
   faGaugeHigh,
 } from "@fortawesome/free-solid-svg-icons";
 
-function CodeSettings() {
+function CodeSettings({ onCompile, onRun, compilationResult, runOutput }) {
 
   const [speed, setSpeed] = useState(1);
-
   return (
     <div className={style.container}>
       <div className={style.element}>
-        <button className={style.compile} onClick={() => console.log("Compile")}>
+        <button className={style.compile} onClick={onCompile}>
           <FontAwesomeIcon icon={faWrench} className={style.icon} />
           Compile
         </button>
+
       </div>
       <div className={style.element}>
         <button className={style.run}>
-          <FontAwesomeIcon icon={faPlay} className={style.icon} />
+          <FontAwesomeIcon icon={faPlay} className={style.icon} onClick={onRun} />
           Run
         </button>
+
+        
       </div>
       <div className={style.element}>
         

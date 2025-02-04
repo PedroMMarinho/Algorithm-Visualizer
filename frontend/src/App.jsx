@@ -18,14 +18,15 @@ const algorithmCategories = [
 
 // Change the data to match the categories and algorithms I want to display
 const algorithmsData = {
-  "graph": ["Dijkstra", "Bellman-Ford", "Floyd-Warshall"],
-  sorting: ['Bubble Sort', 'Quick Sort', 'Merge Sort', 'Insertion Sort', 'Selection Sort', 'Heap Sort', 'Radix Sort', 'Counting Sort', 'Bucket Sort', 'Shell Sort', 'Cocktail Sort', 'Comb Sort', 'Pigeonhole Sort', 'Cycle Sort', 'Bitonic Sort', 'Pancake Sort', 'Binary Insertion Sort', 'Bogo Sort', 'Gnome Sort', 'Odd-Even Sort', 'Stooge Sort', 'Strand Sort', 'Bozo Sort', 'Slow Sort', 'Sleep Sort', 'Bead Sort', 'Pancake'],
+  "graph": ["Dijkstra", "Bellman Ford", "Floyd Warshall"],
+  sorting: ['Bubble Sort', 'Quick Sort', 'Merge Sort', 'Insertion Sort', 'Selection Sort', 'Heap Sort', 'Radix Sort', 'Counting Sort', 'Bucket Sort', 'Shell Sort', 'Cocktail Sort', 'Comb Sort', 'Pigeonhole Sort', 'Cycle Sort', 'Bitonic Sort', 'Pancake Sort', 'Binary Insertion Sort', 'Bogo Sort'],
   searching: ["Linear Search", "Binary Search"],
-  backtracking: ["N-Queens", "Sudoku Solver"],
+  backtracking: ["N Queens", "Sudoku Solver"],
   "divide-conquer": ["Merge Sort", "Quick Sort"],
   greedy: ["Fractional Knapsack", "Prim's Algorithm"],
   "dynamic-programming": ["0-1 Knapsack", "Longest Common Subsequence"],
 };
+
 
 function App() {
   return (

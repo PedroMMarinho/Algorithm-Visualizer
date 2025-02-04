@@ -290,6 +290,22 @@
           "buildMultiTargeting/Microsoft.Extensions.ApiDescription.Server.targets": {}
         }
       },
+      "Microsoft.Extensions.DependencyModel/9.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net9.0/Microsoft.Extensions.DependencyModel.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/Microsoft.Extensions.DependencyModel.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0/_._": {}
+        }
+      },
       "Microsoft.OpenApi/1.6.22": {
         "type": "package",
         "compile": {
@@ -1568,6 +1584,34 @@
         "tools/netcoreapp2.1/System.Diagnostics.DiagnosticSource.dll"
       ]
     },
+    "Microsoft.Extensions.DependencyModel/9.0.1": {
+      "sha512": "FHPy9cbb0y09riEpsrU5XYpOgf4nTfHj7a0m1wLC5DosGtjJn9g03gGg1GTJmEdRFBQrJwbwTnHqLCdNLsoYgA==",
+      "type": "package",
+      "path": "microsoft.extensions.dependencymodel/9.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/Microsoft.Extensions.DependencyModel.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net8.0/_._",
+        "buildTransitive/netcoreapp2.0/Microsoft.Extensions.DependencyModel.targets",
+        "lib/net462/Microsoft.Extensions.DependencyModel.dll",
+        "lib/net462/Microsoft.Extensions.DependencyModel.xml",
+        "lib/net8.0/Microsoft.Extensions.DependencyModel.dll",
+        "lib/net8.0/Microsoft.Extensions.DependencyModel.xml",
+        "lib/net9.0/Microsoft.Extensions.DependencyModel.dll",
+        "lib/net9.0/Microsoft.Extensions.DependencyModel.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.DependencyModel.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.DependencyModel.xml",
+        "microsoft.extensions.dependencymodel.9.0.1.nupkg.sha512",
+        "microsoft.extensions.dependencymodel.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
     "Microsoft.OpenApi/1.6.22": {
       "sha512": "aBvunmrdu/x+4CaA/UP1Jx4xWGwk4kymhoIRnn2Vp+zi5/KOPQJ9EkSXHRUr01WcGKtYl3Au7XfkPJbU1G2sjQ==",
       "type": "package",
@@ -1734,6 +1778,7 @@
     "net9.0": [
       "Microsoft.AspNetCore.OpenApi >= 9.0.1",
       "Microsoft.CodeAnalysis.CSharp.Scripting >= 4.12.0",
+      "Microsoft.Extensions.DependencyModel >= 9.0.1",
       "Swashbuckle.AspNetCore >= 7.2.0"
     ]
   },
@@ -1794,6 +1839,10 @@
           "Microsoft.CodeAnalysis.CSharp.Scripting": {
             "target": "Package",
             "version": "[4.12.0, )"
+          },
+          "Microsoft.Extensions.DependencyModel": {
+            "target": "Package",
+            "version": "[9.0.1, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
