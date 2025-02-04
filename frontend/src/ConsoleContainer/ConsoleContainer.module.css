@@ -1,20 +1,26 @@
 
 
 .consoleContainer{
-    display: flex;
-    flex-direction: column;
+    display: block;
     border-top: #838383 2px solid;
     height: 50%;
     width: 100%;
     overflow-y: auto;
     color: #dbdbdb;
     padding: 20px;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    max-width: 100%;
 }
 
 .consoleContent{
     display: flex;
     margin-top: 10px;
     margin-bottom: 10px;
-    height: 100%;
-    word-wrap: break-word;
+}
+
+.consoleHeader{
+    border-bottom: #838383 2px solid;
+    width: 100%;
+    padding-bottom: 10px;
 }

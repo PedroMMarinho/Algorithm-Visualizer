@@ -11,6 +11,7 @@ import { marked } from "marked";
 import "github-markdown-css/github-markdown.css";
 import VisualizerContainer from "../VisualizerContainer/VisualizerContainer";
 import ConsoleContainer from "../ConsoleContainer/ConsoleContainer";
+import PopUpNotification from "../PopUpNotification/PopUpNotification";
 
 // Get files from database looking like this:
 const initialFiles = {
@@ -53,8 +54,7 @@ const AlgorithmRunner = ({ algorithmCategory, currentAlgorithm }) => {
       });
       
       const result = await response.json();
-      
-      setCompilationResult(result.success ? 'Compilation successful' : 'Compilation failed');
+      setCompilationResult(result);
       
       // Update file compilation status
       setFiles(prev => ({
@@ -80,7 +80,6 @@ const AlgorithmRunner = ({ algorithmCategory, currentAlgorithm }) => {
       });
       
       const result = await response.json();
-      console.log(result);
       setRunOutput(result.success ? result.output : result.errors.join('\n'));
 
     } catch (error) {
@@ -290,6 +289,7 @@ const AlgorithmRunner = ({ algorithmCategory, currentAlgorithm }) => {
           </div>
         </div>
       </div>
+      <PopUpNotification message={compilationResult}/>
     </>
   );
 };
